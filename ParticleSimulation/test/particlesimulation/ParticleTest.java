@@ -18,6 +18,8 @@ import static org.junit.Assert.*;
  * @author Robbykunsan
  */
 public class ParticleTest {
+	private Velocity v;
+	private Particle p1, p2;
 	
 	public ParticleTest() {
 	}
@@ -32,6 +34,9 @@ public class ParticleTest {
 	
 	@Before
 	public void setUp() {
+		v = new Velocity(1.0, 1.0, 1.0);
+		p1 = new Particle(1.0, 1.0, 1.0, 1.0, v);
+		p2 = new Particle(0.0, 0.0, 0.0, 1.0, v);
 	}
 	
 	@After
@@ -44,8 +49,6 @@ public class ParticleTest {
 	@Test
 	public void testCalculate_distance() {
 		System.out.println("calculate_distance");
-		Particle p1 = new Particle(1.0, 1.0, 1.0);
-		Particle p2 = new Particle(0.0, 0.0, 0.0);
 		double expResult = Math.sqrt(3.0);
 		double result = p1.calculate_distance(p2);
 		assertEquals(expResult, result, 0.0);
@@ -57,11 +60,10 @@ public class ParticleTest {
 	@Test
 	public void testCalculate_power() {
 		System.out.println("calculate_power");
-		double distance = 2.0;
-		Particle p = new Particle(0.0, 0.0, 0.0);
-		double expResult = 0.25;
-		double result = p.calculate_power(distance);
-		assertEquals(expResult, result, 0.0);
+		Power result = p1.calculate_power(p2);
+		assertEquals(result.x, 1.0, 0.0);
+		assertEquals(result.y, 1.0, 0.0);
+		assertEquals(result.z, 1.0, 0.0);
 	}
 	
 }
