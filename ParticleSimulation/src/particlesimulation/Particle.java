@@ -37,19 +37,55 @@ public class Particle {
 					   p.position.z - this.position.z);
 	}
 
-	private double attractive_force_function(double own_mass, double partner_mass, double distance){
+	public Power force_function(Particle p){
 		// this function should be redefined
-		return (own_mass * partner_mass)/(distance * distance);
-	}
-	
-	public Power calculate_power(Particle p){
-		double power_x, power_y, power_z;
+		double power_value;
 		DirectionVector v = calculate_vector(p);
-		// use function which user difines
-		power_x = attractive_force_function(this.mass, p.mass, v.x);
-		power_y = attractive_force_function(this.mass, p.mass, v.y);
-		power_z = attractive_force_function(this.mass, p.mass, v.z);
-		return new Power(power_x, power_y, power_z);
+		if (v.value > 10.0) {
+			power_value = (p.mass * this.mass)/Math.pow(v.value, 2.0);
+		} else {
+			power_value = -v.value;
+		}
+		return new Power(power_value*v.x_vector(), 
+				  power_value*v.y_vector(),
+				  power_value*v.z_vector());
 	}
 
+	private double kinetic_equation(double v, double a, double t) {
+		return v + a * t;
+	}
+	
+	public Velocity calculate_velocity(Power power, double t){
+		// calculate v after passing t seconds
+		
+		return new Velocity(kinetic_equation(this.velocity.x, power.x/this.mass, t), 
+				    kinetic_equation(this.velocity.y, power.y/this.mass, t),
+				    kinetic_equation(this.velocity.z, power.z/this.mass, t));
+	}
+
+	private double move_equation(double v, double a, double t){
+		return v * t + a * t * t / 2;
+	}
+
+	private double fix_position(double pos, double limit){
+		if (pos > limit){
+			return fix_position(pos - limit, limit);
+		} else if (pos < -limit){
+			return fix_position(pos + limit, limit);
+		} else {
+			return pos;
+		}
+	}
+
+	public Position calculate_position(Power power, double t){
+		// calculate position after passing t seconds
+
+		double next_x, next_y, next_z;
+		double limit = ParticleSimulation.WIDTH;
+
+		next_x = fix_position(this.position.x + move_equation(this.velocity.x, power.x/this.mass, t), limit);
+	        next_y = fix_position(this.position.y + move_equation(this.velocity.y, power.y/this.mass, t), limit);
+	        next_z = fix_position(this.position.z + move_equation(this.velocity.z, power.z/this.mass, t), limit);
+		return new Position(next_x, next_y, next_z);
+	}
 }

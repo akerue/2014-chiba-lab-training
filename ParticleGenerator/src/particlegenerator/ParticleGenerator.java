@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 
-package particlesimulation;
+package particlegenerator;
 
+import particlesimulation.Particle;
 /**
  *
  * @author Robbykunsan
  */
-public class ParticleSimulation {
-	public static final double WIDTH = 100.0;
+public class ParticleGenerator {
 
 	/**
 	 * @param args the command line arguments

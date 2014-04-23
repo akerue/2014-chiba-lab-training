@@ -20,4 +20,16 @@ public class DirectionVector {
 		this.z = z;
 		this.value = Math.sqrt(x * x + y * y + z * z);
 	}
+
+	public double x_vector(){
+		return this.x/this.value;
+	}
+
+	public double y_vector(){
+		return this.y/this.value;
+	}
+	
+	public double z_vector(){
+		return this.z/this.value;
+	}
 }
