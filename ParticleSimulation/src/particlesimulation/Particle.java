@@ -20,6 +20,12 @@ public class Particle {
 		this.mass = mass;
 		this.velocity = initial_velocity;
 	}
+	
+	public Particle(double x, double y, double z){
+		this.position = new Position(x, y, z);
+		this.mass = ParticleSimulation.MASS;
+		this.velocity = new Velocity(0, 0, 0);
+	}
 
 	public double calculate_distance(Particle p){
 		double delta_x = position.x - p.position.x;
@@ -37,7 +43,7 @@ public class Particle {
 					   p.position.z - this.position.z);
 	}
 
-	public Power force_function(Particle p){
+	private Power force_function(Particle p){
 		// this function should be redefined
 		double power_value;
 		DirectionVector v = calculate_vector(p);
@@ -75,6 +81,17 @@ public class Particle {
 		}
 	}
 
+	public Power calculate_power(Particle[] particles, int own_index){
+		Power total_power = new Power(0.0, 0.0, 0.0);
+		for (int i = 0; i < particles.length; i++) {
+			if (i == own_index){
+				continue;
+			}
+			total_power.add(force_function(particles[i]));
+		}
+		return total_power;
+	}
+
 	public Position calculate_position(Power power, double t){
 		// calculate position after passing t seconds
 
@@ -85,5 +102,18 @@ public class Particle {
 	        next_y = fix_position(this.position.y + move_equation(this.velocity.y, power.y/this.mass, t), limit);
 	        next_z = fix_position(this.position.z + move_equation(this.velocity.z, power.z/this.mass, t), limit);
 		return new Position(next_x, next_y, next_z);
+	}
+
+	public void update_position(Power power, double t){
+		// calculate position after passing t seconds
+
+		double limit = ParticleSimulation.WIDTH;
+
+		this.position.x = 
+			fix_position(this.position.x + move_equation(this.velocity.x, power.x/this.mass, t), limit);
+	        this.position.y = 
+			fix_position(this.position.y + move_equation(this.velocity.y, power.y/this.mass, t), limit);
+	        this.position.z = 
+			fix_position(this.position.z + move_equation(this.velocity.z, power.z/this.mass, t), limit);
 	}
 }

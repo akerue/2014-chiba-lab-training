@@ -53,17 +53,5 @@ public class ParticleTest {
 		double result = p1.calculate_distance(p2);
 		assertEquals(expResult, result, 0.0);
 	}
-
-	/**
-	 * Test of calculate_power method, of class Particle.
-	 */
-	@Test
-	public void testCalculate_power() {
-		System.out.println("calculate_power");
-		Power result = p1.calculate_power(p2);
-		assertEquals(result.x, 1.0, 0.0);
-		assertEquals(result.y, 1.0, 0.0);
-		assertEquals(result.z, 1.0, 0.0);
-	}
 	
 }
