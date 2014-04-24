@@ -23,7 +23,6 @@ public class ParticleConfigGenerator {
 		double x, y, z;
 		String[] pos;
 		String line;
-		StringBuilder builder = new StringBuilder();
 		
 		String filepath = new String("/Users/Robbykunsan/Workspace/mlab/training/config/conf.txt");
 
@@ -36,6 +35,7 @@ public class ParticleConfigGenerator {
 				y = random.nextInt(100) + random.nextDouble();
 				z = random.nextInt(100) + random.nextDouble();
 				pos = new String[]{Double.toString(x), Double.toString(y), Double.toString(z)};
+				StringBuilder builder = new StringBuilder();
 				for (int j = 0; j < pos.length - 1; j++){
 					builder.append(pos[j]).append(" ");
 				}

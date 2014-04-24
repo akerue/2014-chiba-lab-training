@@ -2,3 +2,5 @@
 /ParticleSimulation/build/
 /ParticleGenerator/nbproject/private/
 /ParticleConfigGenerator/nbproject/private/
+/ParticleConfigGenerator/build/
+config/
