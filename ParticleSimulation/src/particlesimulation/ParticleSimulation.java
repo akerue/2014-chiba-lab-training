@@ -15,7 +15,7 @@ import java.util.*;
 public class ParticleSimulation {
 	public static final double WIDTH = 100.0;
 	public static final double MASS = 10.0;
-	public static final double STEP = 0.01;
+	public static final double STEP = 0.1;
 
 	public static void main(String[] args) {
 		Particle[] particles = init();
