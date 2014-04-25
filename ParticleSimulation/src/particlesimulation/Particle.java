@@ -70,7 +70,7 @@ public class Particle {
 	}
 
 	private double move_equation(double v, double a, double t){
-		return v * t + a * t * t / 2;
+		return (v * t + a * t * t / 2) * 1000;
 	}
 
 	private double fix_position(double pos, double limit){
