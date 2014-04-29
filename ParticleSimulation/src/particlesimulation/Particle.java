@@ -75,7 +75,9 @@ public class Particle {
 
 	private double fix_position(double pos, double limit){
 		if (pos > limit){
-			return fix_position(pos - limit, limit);
+			return fix_position(limit - (pos - limit) * 2, limit);
+		} else if (pos < 0.0) {
+			return fix_position(-pos, limit);
 		} else {
 			return pos;
 		}
