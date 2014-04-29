@@ -4,5 +4,4 @@
 /ParticleConfigGenerator/nbproject/private/
 /ParticleConfigGenerator/build/
 config/
-/ParticleSimulation/src/jol/jol-cli/target/
-/ParticleSimulation/src/jol/jol-core/target/
+/ParticleSimulation/src/jol/

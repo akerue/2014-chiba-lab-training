@@ -47,10 +47,10 @@ public class Particle {
 		// this function should be redefined
 		double power_value;
 		DirectionVector v = calculate_vector(p);
-		if (v.value > 10.0) {
+		if (v.value != 0.0) {
 			power_value = (p.mass * this.mass)/Math.pow(v.value, 2.0);
 		} else {
-			power_value = -v.value;
+			power_value = 0.0;
 		}
 		return new Power(power_value*v.x_vector(), 
 				  power_value*v.y_vector(),
@@ -75,9 +75,9 @@ public class Particle {
 
 	private double fix_position(double pos, double limit){
 		if (pos > limit){
-			return fix_position(limit - (pos - limit) * 2, limit);
+			return fix_position(pos % limit, limit);
 		} else if (pos < 0.0) {
-			return fix_position(-pos, limit);
+			return fix_position(pos % limit + limit, limit);
 		} else {
 			return pos;
 		}
