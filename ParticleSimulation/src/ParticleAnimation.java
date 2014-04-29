@@ -38,7 +38,7 @@ import particlesimulation.*;
  */
 public class ParticleAnimation extends Application {
 	double radius = 1.0;
-	int TIMES = 100;
+	int TIMES = 500;
 	
 	@Override
 	public void start(Stage primaryStage) {
