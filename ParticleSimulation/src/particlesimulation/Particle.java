@@ -15,6 +15,14 @@ public class Particle {
 	public Velocity velocity;
 	public double mass;
 
+	public int x_index, y_index, z_index;
+
+	public static Particle[] obj_list;
+
+	public static double[] x_list;
+	public static double[] y_list;
+	public static double[] z_list;
+
 	public Particle(double x, double y, double z, double mass, Velocity initial_velocity){
 		this.position = new Position(x, y, z);
 		this.mass = mass;
@@ -41,6 +49,12 @@ public class Particle {
 		return new DirectionVector(p.position.x - this.position.x, 
 					   p.position.y - this.position.y, 
 					   p.position.z - this.position.z);
+	}
+	
+	public DirectionVector calculate_vector(int index){
+		return new DirectionVector(Particle.x_list[index] - this.position.x, 
+					   Particle.y_list[index] - this.position.y, 
+					   Particle.z_list[index] - this.position.z);
 	}
 
 	private Power force_function(Particle p){
@@ -70,7 +84,7 @@ public class Particle {
 	}
 
 	private double move_equation(double v, double a, double t){
-		return (v * t + a * t * t / 2) * 100;
+		return (v * t + a * t * t / 2) * 10;
 	}
 
 	private double fix_position(double pos, double limit){
@@ -118,4 +132,21 @@ public class Particle {
 	        this.position.z = 
 			fix_position(this.position.z + move_equation(this.velocity.z, power.z/this.mass, t), limit);
 	}
+
+	public void update_registered_space(){
+		double side = ParticleSimulation.SIDE;
+		
+		this.x_index = (int)(this.position.x/side);
+		this.y_index = (int)(this.position.y/side);
+		this.z_index = (int)(this.position.z/side);
+	}
+
+	public static void create_field_list(){
+		for(int i = 0; i < obj_list.length; i++){
+			x_list[i] = obj_list[i].position.x;
+			y_list[i] = obj_list[i].position.y;
+			z_list[i] = obj_list[i].position.z;
+		}
+	}
+
 }

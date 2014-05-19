@@ -13,14 +13,18 @@ import java.util.*;
  * @author Robbykunsan
  */
 public class ParticleSimulation {
-	public static final double WIDTH = 100.0;
+	public static final double WIDTH = 99.0;
 	public static final double MASS = 10.0;
 	public static final double STEP = 0.1;
+	public static final int LEVEL = 3;
+	public static final double SIDE = WIDTH/LEVEL;
+
+	public static ArrayList<Particle>[][][] registered_particles;
 
 	public static void main(String[] args) {
-		Particle[] particles = init();
+		Particle.obj_list = init();
+		
 	
-		particles = simple_update(particles, STEP);
 	}
 
 	public static Particle[] init(){
@@ -53,13 +57,22 @@ public class ParticleSimulation {
 		return particles.toArray(new Particle[particles.size()]);
 	}
 
-	public static Particle[] simple_update(Particle[] particles, double step){
+	public static void simple_update(double step){
 		Power power;
 
-		for (int i = 0; i < particles.length; i++){
-			power = particles[i].calculate_power(particles, i);
-			particles[i].update_position(power, step);
+		for (int i = 0; i < Particle.obj_list.length; i++){
+			power = Particle.obj_list[i].calculate_power(Particle.obj_list, i);
+			Particle.obj_list[i].update_position(power, step);
 		}
-		return particles;
+	}
+
+	public static void update_grouping(Particle particle){
+		particle.update_registered_space();
+		registered_particles[particle.x_index][particle.y_index][particle.z_index]
+			.add(particle);
+	}
+
+	public static void array_field_update(double step){
+		
 	}
 }

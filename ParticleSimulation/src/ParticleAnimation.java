@@ -54,48 +54,46 @@ public class ParticleAnimation extends Application {
 		scene.setCamera(camera);
 
 		// generate particles
-		Particle[] particles;
-		particles = ParticleSimulation.init();
+		Particle.obj_list = ParticleSimulation.init();
 
-		Sphere[] spheres = new Sphere[particles.length];
+		Sphere[] spheres = new Sphere[Particle.obj_list.length];
 		ParallelTransition[] parallelTransitions = new ParallelTransition[TIMES];
 
 		for (int i = 0; i < TIMES; i++){
 			parallelTransitions[i] = new ParallelTransition();
 		}
 
-		for (int i = 0; i < particles.length; i++){
+		for (int i = 0; i < Particle.obj_list.length; i++){
 			spheres[i] = new Sphere(radius);
-			spheres[i].setTranslateX(particles[i].position.x);
-			spheres[i].setTranslateY(particles[i].position.y);
-			spheres[i].setTranslateZ(particles[i].position.z);
+			spheres[i].setTranslateX(Particle.obj_list[i].position.x);
+			spheres[i].setTranslateY(Particle.obj_list[i].position.y);
+			spheres[i].setTranslateZ(Particle.obj_list[i].position.z);
 			root.getChildren().add(spheres[i]);	
 		}
 		
-		Particle[] next_particles;
+		Particle[] last_particles;
 		TranslateTransition[] translateTransitions = 
-			new TranslateTransition[particles.length];
-		for (int i = 0; i < particles.length; i++){
+			new TranslateTransition[Particle.obj_list.length];
+		for (int i = 0; i < Particle.obj_list.length; i++){
 			translateTransitions[i] = new TranslateTransition();
 		}
 		
 		for (int count = 0; count < TIMES; count++){
-			next_particles = 
-				ParticleSimulation.simple_update(particles, ParticleSimulation.STEP);
-			for (int i = 0; i < particles.length; i++){
+			last_particles = Particle.obj_list;
+			ParticleSimulation.simple_update(ParticleSimulation.STEP);
+			for (int i = 0; i < Particle.obj_list.length; i++){
 				translateTransitions[i] = new TranslateTransition(
 						Duration.millis(
 							ParticleSimulation.STEP * 1000),
 						spheres[i]);
-				translateTransitions[i].setFromX(particles[i].position.x);
-				translateTransitions[i].setToX(next_particles[i].position.x);
-				translateTransitions[i].setFromY(particles[i].position.y);
-				translateTransitions[i].setToY(next_particles[i].position.y);
-				translateTransitions[i].setFromZ(particles[i].position.z);
-				translateTransitions[i].setToZ(next_particles[i].position.z);
+				translateTransitions[i].setFromX(last_particles[i].position.x);
+				translateTransitions[i].setToX(Particle.obj_list[i].position.x);
+				translateTransitions[i].setFromY(last_particles[i].position.y);
+				translateTransitions[i].setToY(Particle.obj_list[i].position.y);
+				translateTransitions[i].setFromZ(last_particles[i].position.z);
+				translateTransitions[i].setToZ(Particle.obj_list[i].position.z);
 				parallelTransitions[count].getChildren().add(translateTransitions[i]);
 			}
-			particles = next_particles;
 		}
 		SequentialTransition sequentialTransition = new SequentialTransition();
 		sequentialTransition.getChildren().addAll(parallelTransitions);
