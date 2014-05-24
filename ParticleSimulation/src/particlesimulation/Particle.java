@@ -12,10 +12,10 @@ public class Particle {
 	// Repeat x, y and z field
 	// [x-1, y-1, z-1, x-2, y-2, z-2...]
 
-	public Particle(double x, double y, double z, double mass, Velocity initial_velocity){
+	public Particle(double x, double y, double z, double mass, double v_x, double v_y, double v_z){
 		this.position = new Position(x, y, z);
 		this.mass = mass;
-		this.velocity = initial_velocity;
+		this.velocity = new Velocity(v_x, v_y, v_z);
 	}
 	
 	public Particle(double x, double y, double z){
@@ -86,7 +86,7 @@ public class Particle {
 	}
 
 	private double move_equation(double v, double a, double t){
-		return (v * t + a * t * t / 2) * 100;
+		return (v * t + a * t * t / 2) * 1;
 	}
 
 	private double fix_position(double pos, double limit){

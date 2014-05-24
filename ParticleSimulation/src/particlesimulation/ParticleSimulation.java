@@ -18,7 +18,7 @@ public class ParticleSimulation {
 	public static final double STEP = 0.1;
 
 	public static void main(String[] args) throws IOException, FileNotFoundException {
-		Particle.obj_list = init();
+		Particle.obj_list = read_config();
 		Particle.create_field_list();
 		for (int count = 0; count < 10; count++){
 			ParticleSimulation.simple_update(ParticleSimulation.STEP);
@@ -31,7 +31,7 @@ public class ParticleSimulation {
 		}
 	}
 
-	public static Particle[] init() throws IOException, FileNotFoundException{
+	public static Particle[] read_config() throws IOException, FileNotFoundException{
 		ArrayList<Particle> particles = new ArrayList<Particle>();
 		File conf_file = new File("/Users/Robbykunsan/Workspace/mlab/training/config/conf.txt");
 		BufferedReader br = new BufferedReader(new FileReader(conf_file));
@@ -47,7 +47,11 @@ public class ParticleSimulation {
 				particles.add(new Particle(
 							Double.valueOf(parsed_line[0]), 
 							Double.valueOf(parsed_line[1]), 
-							Double.valueOf(parsed_line[2]))
+							Double.valueOf(parsed_line[2]),
+							MASS,
+							Double.valueOf(parsed_line[3]), 
+							Double.valueOf(parsed_line[4]), 
+							Double.valueOf(parsed_line[5]))
 							);
 			}
 		}finally{

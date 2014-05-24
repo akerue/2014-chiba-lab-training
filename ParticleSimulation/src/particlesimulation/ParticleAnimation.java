@@ -39,7 +39,7 @@ public class ParticleAnimation extends Application {
 
 		// generate particles
 		try{
-			Particle.obj_list = ParticleSimulation.init();
+			Particle.obj_list = ParticleSimulation.read_config();
 			Particle.create_field_list();
 		}catch(IOException e){
 			throw new IOException(e);
