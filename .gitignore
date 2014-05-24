@@ -5,3 +5,4 @@
 /ParticleConfigGenerator/build/
 config/
 /ParticleSimulation/src/jol/
+.DS_Store
