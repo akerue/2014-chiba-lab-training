@@ -7,7 +7,7 @@ public class ParticleConfigGenerator {
 	static Random random = new Random();
 	public static final int NUM = 100;
 	public static final int WIDTH = (int) ParticleSimulation.WIDTH;
-	public static final int MAX_VELOCITY = 50;
+	public static final int MAX_VELOCITY = 5;
 
 	public static void main(String[] args) throws IOException {
 		double x, y, z;
