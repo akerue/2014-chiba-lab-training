@@ -86,7 +86,7 @@ public class Particle {
 	}
 
 	private double move_equation(double v, double a, double t){
-		return (v * t + a * t * t / 2) * 1;
+		return (v * t + a * t * t / 2);
 	}
 
 	private double fix_position(double pos, double limit){
@@ -99,10 +99,10 @@ public class Particle {
 		}
 	}
 
-	public Power calculate_power(int own_index){
+	public Power calculate_power(){
 		Power total_power = new Power(0.0, 0.0, 0.0);
 		for (int i = 0; i < Particle.obj_list.length; i++) {
-			if (i == own_index){
+			if (i == this.index){
 				continue;
 			}
 			total_power.add(force_function(i));

@@ -22,11 +22,10 @@ public class ParticleSimulation {
 		Particle.create_field_list();
 		for (int count = 0; count < 10; count++){
 			ParticleSimulation.simple_update(ParticleSimulation.STEP);
-			System.out.println(Particle.obj_list.length);
 			for (int i = 0; i < Particle.obj_list.length; i++){
-				System.out.println(Particle.pos_list[3 * i]);
-				System.out.println(Particle.pos_list[3 * i + 1]);
-				System.out.println(Particle.pos_list[3 * i + 2]);
+				//System.out.println(Particle.pos_list[3 * i]);
+				//System.out.println(Particle.pos_list[3 * i + 1]);
+				//System.out.println(Particle.pos_list[3 * i + 2]);
 			}
 		}
 	}
@@ -64,7 +63,7 @@ public class ParticleSimulation {
 		Power power;
 
 		for (int i = 0; i < Particle.obj_list.length; i++){
-			power = Particle.obj_list[i].calculate_power(i);
+			power = Particle.obj_list[i].calculate_power();
 			Particle.obj_list[i].update_position(power, step);
 		}
 	}
