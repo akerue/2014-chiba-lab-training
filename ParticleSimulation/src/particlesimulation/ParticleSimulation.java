@@ -16,23 +16,26 @@ public class ParticleSimulation {
 	public static final double WIDTH = 99.0;
 	public static final double MASS = 10.0;
 	public static final double STEP = 0.1;
-	public static final int LEVEL = 3;
-	public static final double SIDE = WIDTH/LEVEL;
 
-	public static ArrayList<Particle>[][][] registered_particles;
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, FileNotFoundException {
 		Particle.obj_list = init();
-		
-	
+		Particle.create_field_list();
+		for (int count = 0; count < 10; count++){
+			ParticleSimulation.simple_update(ParticleSimulation.STEP);
+			System.out.println(Particle.obj_list.length);
+			for (int i = 0; i < Particle.obj_list.length; i++){
+				System.out.println(Particle.pos_list[3 * i]);
+				System.out.println(Particle.pos_list[3 * i + 1]);
+				System.out.println(Particle.pos_list[3 * i + 2]);
+			}
+		}
 	}
 
-	public static Particle[] init(){
+	public static Particle[] init() throws IOException, FileNotFoundException{
 		ArrayList<Particle> particles = new ArrayList<Particle>();
-		try {
-			File conf_file = new File("/Users/Robbykunsan/Workspace/mlab/training/config/conf.txt");
-			BufferedReader br = new BufferedReader(new FileReader(conf_file));
-
+		File conf_file = new File("/Users/Robbykunsan/Workspace/mlab/training/config/conf.txt");
+		BufferedReader br = new BufferedReader(new FileReader(conf_file));
+		try{
 			String line;
 			String[] parsed_line;
 			while((line = br.readLine()) != null){
@@ -47,12 +50,8 @@ public class ParticleSimulation {
 							Double.valueOf(parsed_line[2]))
 							);
 			}
-		} catch(FileNotFoundException e){
-			System.out.println(e);
-			System.exit(1);
-		}catch(IOException e){
-			System.out.println(e);
-			System.exit(1);
+		}finally{
+			br.close();
 		}
 		return particles.toArray(new Particle[particles.size()]);
 	}
@@ -61,18 +60,9 @@ public class ParticleSimulation {
 		Power power;
 
 		for (int i = 0; i < Particle.obj_list.length; i++){
-			power = Particle.obj_list[i].calculate_power(Particle.obj_list, i);
+			power = Particle.obj_list[i].calculate_power(i);
 			Particle.obj_list[i].update_position(power, step);
 		}
 	}
 
-	public static void update_grouping(Particle particle){
-		particle.update_registered_space();
-		registered_particles[particle.x_index][particle.y_index][particle.z_index]
-			.add(particle);
-	}
-
-	public static void array_field_update(double step){
-		
-	}
 }
