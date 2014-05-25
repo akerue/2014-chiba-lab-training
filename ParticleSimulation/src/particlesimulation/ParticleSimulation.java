@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package particlesimulation;
 import java.io.*;
 import java.util.*;
 
-/**
- *
- * @author Robbykunsan
- */
 public class ParticleSimulation {
 	public static final double WIDTH = 99.0;
 	public static final double MASS = 10.0;
@@ -19,13 +9,12 @@ public class ParticleSimulation {
 
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		Particle.obj_list = read_config();
-		Particle.create_field_list();
 		for (int count = 0; count < 10; count++){
 			ParticleSimulation.simple_update(ParticleSimulation.STEP);
 			for (int i = 0; i < Particle.obj_list.length; i++){
-				System.out.println(Particle.pos_list[3 * i]);
-				System.out.println(Particle.pos_list[3 * i + 1]);
-				System.out.println(Particle.pos_list[3 * i + 2]);
+				System.out.println(Particle.obj_list[i].position.x);
+				System.out.println(Particle.obj_list[i].position.y);
+				System.out.println(Particle.obj_list[i].position.z);
 			}
 		}
 	}
