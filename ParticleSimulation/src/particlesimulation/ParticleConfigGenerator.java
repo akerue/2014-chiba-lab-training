@@ -5,7 +5,7 @@ import ParticleSimulation.*;
 
 public class ParticleConfigGenerator {
 	static Random random = new Random();
-	public static final int NUM = 10000;
+	public static final int NUM = 1000;
 	public static final int WIDTH = (int) ParticleSimulation.WIDTH;
 	public static final int MAX_VELOCITY = 5;
 

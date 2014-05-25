@@ -11,7 +11,7 @@ public class ParticleSimulation {
 		TimeProfile tp = new TimeProfile();
 		tp.start();
 		Particle.obj_list = read_config();
-		for (int count = 0; count < 100; count++){
+		for (int count = 0; count < 500; count++){
 			simple_update(ParticleSimulation.STEP);
 		}
 		tp.print_micro_time();
