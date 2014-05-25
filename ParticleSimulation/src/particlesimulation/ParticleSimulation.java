@@ -18,16 +18,14 @@ public class ParticleSimulation {
 	public static final double STEP = 0.1;
 
 	public static void main(String[] args) throws IOException, FileNotFoundException {
+		TimeProfile tp = new TimeProfile();
+		tp.start();
 		Particle.obj_list = read_config();
 		Particle.create_field_list();
-		for (int count = 0; count < 10; count++){
+		for (int count = 0; count < 500; count++){
 			ParticleSimulation.simple_update(ParticleSimulation.STEP);
-			for (int i = 0; i < Particle.obj_list.length; i++){
-				System.out.println(Particle.pos_list[3 * i]);
-				System.out.println(Particle.pos_list[3 * i + 1]);
-				System.out.println(Particle.pos_list[3 * i + 2]);
-			}
 		}
+		tp.print_micro_time();
 	}
 
 	public static Particle[] read_config() throws IOException, FileNotFoundException{
