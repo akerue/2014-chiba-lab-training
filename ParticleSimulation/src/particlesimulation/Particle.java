@@ -18,12 +18,6 @@ public class Particle {
 		this.velocity = new Velocity(v_x, v_y, v_z);
 	}
 	
-	public Particle(double x, double y, double z){
-		this.position = new Position(x, y, z);
-		this.mass = ParticleSimulation.MASS;
-		this.velocity = new Velocity(0, 0, 0);
-	}
-
 	public double calculate_distance(Particle p){
 		double delta_x = position.x - p.position.x;
 		double delta_y = position.y - p.position.y;
@@ -50,8 +44,8 @@ public class Particle {
 	private Power force_function(Particle p){
 		double power_value;
 		DirectionVector v = calculate_vector(p);
-		if (v.value != 0.0) {
-			power_value = (p.mass * this.mass)/Math.pow(v.value, 2.0);
+		if (v.get_value() != 0.0) {
+			power_value = -(p.mass * this.mass)/Math.pow(v.get_value(), 2.0);
 		} else {
 			power_value = 0.0;
 		}
@@ -63,8 +57,8 @@ public class Particle {
 	private Power force_function(int index){
 		double power_value;
 		DirectionVector v = calculate_vector(index);
-		if (v.value != 0.0) {
-			power_value = Math.pow(ParticleSimulation.MASS, 2.0)/Math.pow(v.value, 2.0);
+		if (v.get_value() != 0.0) {
+			power_value = Math.pow(ParticleSimulation.MASS, 2.0)/Math.pow(v.get_value(), 2.0);
 		} else {
 			power_value = 0.0;
 		}

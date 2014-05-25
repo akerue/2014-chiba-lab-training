@@ -23,39 +23,36 @@ public class ParticleSimulation {
 		for (int count = 0; count < 10; count++){
 			ParticleSimulation.simple_update(ParticleSimulation.STEP);
 			for (int i = 0; i < Particle.obj_list.length; i++){
-				//System.out.println(Particle.pos_list[3 * i]);
-				//System.out.println(Particle.pos_list[3 * i + 1]);
-				//System.out.println(Particle.pos_list[3 * i + 2]);
+				System.out.println(Particle.pos_list[3 * i]);
+				System.out.println(Particle.pos_list[3 * i + 1]);
+				System.out.println(Particle.pos_list[3 * i + 2]);
 			}
 		}
 	}
 
 	public static Particle[] read_config() throws IOException, FileNotFoundException{
-		ArrayList<Particle> particles = new ArrayList<Particle>();
-		File conf_file = new File("/Users/Robbykunsan/Workspace/mlab/training/config/conf.txt");
+		ArrayList<Particle> particles = new ArrayList<>();
+		File conf_file = new File("../config/conf.txt");
 		BufferedReader br = new BufferedReader(new FileReader(conf_file));
-		try{
-			String line;
-			String[] parsed_line;
-			while((line = br.readLine()) != null){
-				if (line.length() <= 1) {
-					// final line
-					break;
-				}
-				parsed_line = line.replaceAll("¥n", "").split(" ");
-				particles.add(new Particle(
-							Double.valueOf(parsed_line[0]), 
-							Double.valueOf(parsed_line[1]), 
-							Double.valueOf(parsed_line[2]),
-							MASS,
-							Double.valueOf(parsed_line[3]), 
-							Double.valueOf(parsed_line[4]), 
-							Double.valueOf(parsed_line[5]))
-							);
+		String line;
+		String[] parsed_line;
+		while((line = br.readLine()) != null){
+			if (line.length() <= 1) {
+				// final line
+				break;
 			}
-		}finally{
-			br.close();
+			parsed_line = line.replaceAll("¥n", "").split(" ");
+			particles.add(new Particle(
+						Double.valueOf(parsed_line[0]), 
+						Double.valueOf(parsed_line[1]), 
+						Double.valueOf(parsed_line[2]),
+						MASS,
+						Double.valueOf(parsed_line[3]), 
+						Double.valueOf(parsed_line[4]), 
+						Double.valueOf(parsed_line[5]))
+						);
 		}
+		br.close();
 		return particles.toArray(new Particle[particles.size()]);
 	}
 

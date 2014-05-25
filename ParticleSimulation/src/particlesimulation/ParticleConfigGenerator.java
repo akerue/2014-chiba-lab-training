@@ -15,7 +15,7 @@ public class ParticleConfigGenerator {
 		String[] pos;
 		String line;
 		
-		String filepath = new String("/Users/Robbykunsan/Workspace/mlab/training/config/conf.txt");
+		String filepath = new String("../config/conf.txt");
 		File conf_file = new File(filepath);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(conf_file));
 
