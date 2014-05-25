@@ -12,7 +12,7 @@ package particlesimulation;
  */
 public class DirectionVector {
 	double x, y, z;
-	double value;
+	private double value;
 
 	public DirectionVector(double x, double y, double z){
 		this.x = x;
@@ -31,5 +31,9 @@ public class DirectionVector {
 	
 	public double z_vector(){
 		return this.z/this.value;
+	}
+
+	public double get_value(){
+		return this.value;
 	}
 }

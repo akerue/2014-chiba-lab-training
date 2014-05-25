@@ -38,12 +38,8 @@ public class ParticleAnimation extends Application {
 		scene.setCamera(camera);
 
 		// generate particles
-		try{
-			Particle.obj_list = ParticleSimulation.read_config();
-			Particle.create_field_list();
-		}catch(IOException e){
-			throw new IOException(e);
-		}
+		Particle.obj_list = ParticleSimulation.read_config();
+		Particle.create_field_list();
 		Sphere[] spheres = new Sphere[Particle.obj_list.length];
 		ParallelTransition[] parallelTransitions = new ParallelTransition[TIMES];
 
