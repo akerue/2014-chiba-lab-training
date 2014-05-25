@@ -33,7 +33,7 @@ public class Particle {
 		double power_value;
 		DirectionVector v = calculate_vector(p);
 		if (v.get_value() != 0.0) {
-			power_value = -(p.mass * this.mass)/Math.pow(v.get_value(), 2.0);
+			power_value = - (p.mass * this.mass)/Math.pow(v.get_value(), 2.0);
 		} else {
 			power_value = 0.0;
 		}
@@ -71,6 +71,9 @@ public class Particle {
 	public Power calculate_power(){
 		Power total_power = new Power(0.0, 0.0, 0.0);
 		for (int i = 0; i < Particle.obj_list.length; i++) {
+			if (Particle.obj_list[i] == this){
+				continue;
+			}
 			total_power.add(force_function(Particle.obj_list[i]));
 		}
 		return total_power;
@@ -98,7 +101,6 @@ public class Particle {
 		// calculate position after passing t seconds
 
 		double limit = ParticleSimulation.WIDTH;
-
 		this.position.x = 
 			fix_position(this.position.x + 
 				move_equation(this.velocity.x, power.x/this.mass, t), limit);

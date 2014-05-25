@@ -10,7 +10,7 @@ public class ParticleSimulation {
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		Particle.obj_list = read_config();
 		for (int count = 0; count < 10; count++){
-			ParticleSimulation.simple_update(ParticleSimulation.STEP);
+			simple_update(ParticleSimulation.STEP);
 			for (int i = 0; i < Particle.obj_list.length; i++){
 				System.out.println(Particle.obj_list[i].position.x);
 				System.out.println(Particle.obj_list[i].position.y);
