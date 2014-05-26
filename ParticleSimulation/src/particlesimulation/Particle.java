@@ -34,29 +34,16 @@ public class Particle {
 					   p.position.z - this.position.z);
 	}
 	
-	public DirectionVector calculate_vector(int index){
+	public static DirectionVector calculate_vector(int own_index, int partner_index){
 		return new DirectionVector(
-			Particle.pos_list[3 * index]     - Particle.pos_list[3 * this.index], 
-			Particle.pos_list[3 * index + 1] - Particle.pos_list[3 * this.index + 1], 
-			Particle.pos_list[3 * index + 2] - Particle.pos_list[3 * this.index + 2]);
+			Particle.pos_list[3 * partner_index]     - Particle.pos_list[3 * own_index], 
+			Particle.pos_list[3 * partner_index + 1] - Particle.pos_list[3 * own_index + 1], 
+			Particle.pos_list[3 * partner_index + 2] - Particle.pos_list[3 * own_index + 2]);
 	}
 
-	private Power force_function(Particle p){
+	private static Power force_function(int own_index, int partner_index){
 		double power_value;
-		DirectionVector v = calculate_vector(p);
-		if (v.get_value() != 0.0) {
-			power_value = -(p.mass * this.mass)/Math.pow(v.get_value(), 2.0);
-		} else {
-			power_value = 0.0;
-		}
-		return new Power(power_value*v.x_vector(), 
-				  power_value*v.y_vector(),
-				  power_value*v.z_vector());
-	}
-
-	private Power force_function(int index){
-		double power_value;
-		DirectionVector v = calculate_vector(index);
+		DirectionVector v = calculate_vector(own_index, partner_index);
 		if (v.get_value() != 0.0) {
 			power_value = Math.pow(ParticleSimulation.MASS, 2.0)/Math.pow(v.get_value(), 2.0);
 		} else {
@@ -79,11 +66,11 @@ public class Particle {
 				    kinetic_equation(this.velocity.z, power.z/this.mass, t));
 	}
 
-	private double move_equation(double v, double a, double t){
+	private static double move_equation(double v, double a, double t){
 		return (v * t + a * t * t / 2);
 	}
 
-	private double fix_position(double pos, double limit){
+	private static double fix_position(double pos, double limit){
 		if (pos > limit){
 			return fix_position(pos % limit, limit);
 		} else if (pos < 0.0) {
@@ -93,13 +80,13 @@ public class Particle {
 		}
 	}
 
-	public Power calculate_power(){
+	public static Power calculate_power(int index){
 		Power total_power = new Power(0.0, 0.0, 0.0);
-		for (int i = 0; i < Particle.obj_list.length; i++) {
-			if (i == this.index){
+		for (int i = 0; i < Particle.obj_list.length; i++){
+			if (i == index){
 				continue;
 			}
-			total_power.add(force_function(i));
+			total_power.add(force_function(index, i));
 		}
 		return total_power;
 	}
@@ -122,20 +109,20 @@ public class Particle {
 		return new Position(next_x, next_y, next_z);
 	}
 
-	public void update_position(Power power, double t){
+	public static void update_position(Power power, Velocity velocity, double mass, int index, double t){
 		// calculate position after passing t seconds
 
 		double limit = ParticleSimulation.WIDTH;
 
-		Particle.pos_list[3 * this.index] = 
-			fix_position(Particle.pos_list[3 * this.index] + 
-				move_equation(this.velocity.x, power.x/this.mass, t), limit);
-	        Particle.pos_list[3 * this.index + 1] = 
-			fix_position(Particle.pos_list[3 * this.index + 1] + 
-				move_equation(this.velocity.y, power.y/this.mass, t), limit);
-	        Particle.pos_list[3 * this.index + 2] = 
-			fix_position(Particle.pos_list[3 * this.index + 2] + 
-				move_equation(this.velocity.z, power.z/this.mass, t), limit);
+		Particle.pos_list[3 * index] = 
+			fix_position(Particle.pos_list[3 * index] + 
+				move_equation(velocity.x, power.x/mass, t), limit);
+	        Particle.pos_list[3 * index + 1] = 
+			fix_position(Particle.pos_list[3 * index + 1] + 
+				move_equation(velocity.y, power.y/mass, t), limit);
+	        Particle.pos_list[3 * index + 2] = 
+			fix_position(Particle.pos_list[3 * index + 2] + 
+				move_equation(velocity.z, power.z/mass, t), limit);
 	}
 
 	public static void create_field_list(){
