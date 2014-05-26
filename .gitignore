@@ -6,3 +6,4 @@
 config/
 /ParticleSimulation/src/jol/
 .DS_Store
+/ParticleSimulation/src/particlesimulation/*.class

@@ -30,7 +30,7 @@ public class ParticleSimulation {
 
 	public static Particle[] read_config() throws IOException, FileNotFoundException{
 		ArrayList<Particle> particles = new ArrayList<>();
-		File conf_file = new File("../config/conf.txt");
+		File conf_file = new File("../../config/conf.txt");
 		BufferedReader br = new BufferedReader(new FileReader(conf_file));
 		String line;
 		String[] parsed_line;

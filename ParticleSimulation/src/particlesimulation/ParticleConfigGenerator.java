@@ -1,12 +1,11 @@
 package particlesimulation;
 import java.util.Random;
 import java.io.*;
-import ParticleSimulation.*;
 
 public class ParticleConfigGenerator {
 	static Random random = new Random();
 	public static final int NUM = 1000;
-	public static final int WIDTH = (int) ParticleSimulation.WIDTH;
+	public static final int WIDTH = 99;
 	public static final int MAX_VELOCITY = 5;
 
 	public static void main(String[] args) throws IOException {
@@ -15,7 +14,7 @@ public class ParticleConfigGenerator {
 		String[] pos;
 		String line;
 		
-		String filepath = new String("../config/conf.txt");
+		String filepath = new String("../../config/conf.txt");
 		File conf_file = new File(filepath);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(conf_file));
 
