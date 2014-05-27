@@ -56,13 +56,10 @@ public class ParticleSimulation {
 
 	public static void simple_update(double step){
 		Power power;
-		Velocity velocity;
 
 		for (int i = 0; i < Particle.obj_list.length; i++){
 			power = Particle.calculate_power(i);
-
-			velocity = Particle.obj_list[i].velocity;
-			Particle.update_position(power, velocity, MASS, i, step);
+			Particle.update_position(power, MASS, i, step);
 		}
 	}
 
