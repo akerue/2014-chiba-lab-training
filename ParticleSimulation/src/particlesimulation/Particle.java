@@ -6,6 +6,12 @@ public class Particle {
 	public Velocity velocity;
 	public double mass;
 
+	// Unused field for extending particle object
+	public double density;
+	public double volume;
+	public double pressure;
+	public double temperature;
+
 	public static Particle[] obj_list;
 
 	public static double[] pos_list;
