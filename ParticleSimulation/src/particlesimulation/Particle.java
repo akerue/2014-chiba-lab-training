@@ -15,6 +15,7 @@ public class Particle {
 	public static Particle[] obj_list;
 
 	public static double[] pos_list;
+	public static double[] v_list;
 	// Repeat x, y and z field
 	// [x-1, y-1, z-1, x-2, y-2, z-2...]
 
@@ -115,29 +116,35 @@ public class Particle {
 		return new Position(next_x, next_y, next_z);
 	}
 
-	public static void update_position(Power power, Velocity velocity, double mass, int index, double t){
+	public static void update_position(Power power, double mass, int index, double t){
 		// calculate position after passing t seconds
 
 		double limit = ParticleSimulation.WIDTH;
 
 		Particle.pos_list[3 * index] = 
 			fix_position(Particle.pos_list[3 * index] + 
-				move_equation(velocity.x, power.x/mass, t), limit);
+				move_equation(v_list[3 * index], power.x/mass, t), limit);
 	        Particle.pos_list[3 * index + 1] = 
 			fix_position(Particle.pos_list[3 * index + 1] + 
-				move_equation(velocity.y, power.y/mass, t), limit);
+				move_equation(v_list[3 * index + 1], power.y/mass, t), limit);
 	        Particle.pos_list[3 * index + 2] = 
 			fix_position(Particle.pos_list[3 * index + 2] + 
-				move_equation(velocity.z, power.z/mass, t), limit);
+				move_equation(v_list[3 * index + 2], power.z/mass, t), limit);
 	}
 
 	public static void create_field_list(){
 		pos_list = new double[obj_list.length * 3];
+		v_list = new double[obj_list.length * 3];
 		for(int i = 0; i < obj_list.length; i++){
 			obj_list[i].index   = i;
 			pos_list[3 * i]     = obj_list[i].position.x;
 			pos_list[3 * i + 1] = obj_list[i].position.y;
 			pos_list[3 * i + 2] = obj_list[i].position.z;
+
+			v_list[3 * i]     = obj_list[i].velocity.x;
+			v_list[3 * i + 1] = obj_list[i].velocity.y;
+			v_list[3 * i + 2] = obj_list[i].velocity.z;
+			
 		}
 	}
 
