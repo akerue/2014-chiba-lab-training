@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package particlesimulation;
 import java.io.*;
 import java.util.*;
 
-/**
- *
- * @author Robbykunsan
- */
 public class ParticleSimulation {
 	public static final double WIDTH = 99.0;
 	public static final double MASS = 10.0;
@@ -30,7 +20,7 @@ public class ParticleSimulation {
 
 	public static Particle[] read_config() throws IOException, FileNotFoundException{
 		ArrayList<Particle> particles = new ArrayList<>();
-		File conf_file = new File("../../config/conf.txt");
+		File conf_file = new File("../config/conf.txt");
 		BufferedReader br = new BufferedReader(new FileReader(conf_file));
 		String line;
 		String[] parsed_line;
