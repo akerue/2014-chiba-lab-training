@@ -11,13 +11,13 @@ public class ParticleSimulation {
 		Particle.obj_list = read_config();
 		// for JIT optimization
 		for (int count = 0; count < 50; count++){
-			ParticleSimulation.simple_update(ParticleSimulation.STEP);
+			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
 		TimeProfile tp = new TimeProfile();
 		tp.start();
 		Particle.create_field_list();
 		for (int count = 0; count < 500; count++){
-			ParticleSimulation.simple_update(ParticleSimulation.STEP);
+			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
 		tp.print_micro_time();
 	}
@@ -48,7 +48,7 @@ public class ParticleSimulation {
 		return particles.toArray(new Particle[particles.size()]);
 	}
 
-	public static void simple_update(double step){
+	public static void update_all_position(double step){
 		Power power;
 
 		for (int i = 0; i < Particle.obj_list.length; i++){
