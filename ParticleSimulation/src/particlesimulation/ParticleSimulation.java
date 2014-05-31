@@ -9,13 +9,13 @@ public class ParticleSimulation {
 
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		Particle.obj_list = read_config();
+		Particle.create_field_list();
 		// for JIT optimization
 		for (int count = 0; count < 50; count++){
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
 		TimeProfile tp = new TimeProfile();
 		tp.start();
-		Particle.create_field_list();
 		for (int count = 0; count < 500; count++){
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
