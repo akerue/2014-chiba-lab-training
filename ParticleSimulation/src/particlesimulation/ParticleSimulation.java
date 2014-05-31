@@ -10,12 +10,12 @@ public class ParticleSimulation {
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		Particle.obj_list = read_config();
 		for (int count = 0; count < 50; count++){
-			simple_update(ParticleSimulation.STEP);
+			update_all_position(ParticleSimulation.STEP);
 		}
 		TimeProfile tp = new TimeProfile();
 		tp.start();
 		for (int count = 0; count < 500; count++){
-			simple_update(ParticleSimulation.STEP);
+			update_all_position(ParticleSimulation.STEP);
 		}
 		tp.print_micro_time();
 	}
@@ -46,7 +46,7 @@ public class ParticleSimulation {
 		return particles.toArray(new Particle[particles.size()]);
 	}
 
-	public static void simple_update(double step){
+	public static void update_all_position(double step){
 		Power power;
 
 		for (int i = 0; i < Particle.obj_list.length; i++){

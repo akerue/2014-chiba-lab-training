@@ -58,7 +58,7 @@ public class ParticleAnimation extends Application {
 		
 		for (int count = 0; count < TIMES; count++){
 			last_particles = Particle.obj_list;
-			ParticleSimulation.simple_update(ParticleSimulation.STEP);
+			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 			for (int i = 0; i < Particle.obj_list.length; i++){
 				translateTransitions[i] = new TranslateTransition(
 						Duration.millis(
