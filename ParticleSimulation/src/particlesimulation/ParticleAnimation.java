@@ -49,9 +49,9 @@ public class ParticleAnimation extends Application {
 
 		for (int i = 0; i < Particle.obj_list.length; i++){
 			spheres[i] = new Sphere(radius);
-			spheres[i].setTranslateX(Particle.pos_list[3 * i]);
-			spheres[i].setTranslateY(Particle.pos_list[3 * i + 1]);
-			spheres[i].setTranslateZ(Particle.pos_list[3 * i + 2]);
+			spheres[i].setTranslateX(Particle.field_list[3 * i]);
+			spheres[i].setTranslateY(Particle.field_list[3 * i + 1]);
+			spheres[i].setTranslateZ(Particle.field_list[3 * i + 2]);
 			root.getChildren().add(spheres[i]);	
 		}
 		
@@ -63,19 +63,19 @@ public class ParticleAnimation extends Application {
 		}
 		
 		for (int count = 0; count < TIMES; count++){
-			last_particles = Particle.pos_list;
+			last_particles = Particle.field_list;
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 			for (int i = 0; i < Particle.obj_list.length; i++){
 				translateTransitions[i] = new TranslateTransition(
 						Duration.millis(
 							ParticleSimulation.STEP * 1000),
 						spheres[i]);
-				translateTransitions[i].setFromX(last_particles[3 * i]);
-				translateTransitions[i].setFromY(last_particles[3 * i + 1]);
-				translateTransitions[i].setFromZ(last_particles[3 * i + 2]);
-				translateTransitions[i].setToX(Particle.pos_list[3 * i]);
-				translateTransitions[i].setToY(Particle.pos_list[3 * i + 1]);
-				translateTransitions[i].setToZ(Particle.pos_list[3 * i + 2]);
+				translateTransitions[i].setFromX(last_particles[6 * i]);
+				translateTransitions[i].setFromY(last_particles[6 * i + 1]);
+				translateTransitions[i].setFromZ(last_particles[6 * i + 2]);
+				translateTransitions[i].setToX(Particle.field_list[6 * i]);
+				translateTransitions[i].setToY(Particle.field_list[6 * i + 1]);
+				translateTransitions[i].setToZ(Particle.field_list[6 * i + 2]);
 				parallelTransitions[count].getChildren().add(translateTransitions[i]);
 			}
 		}
@@ -88,9 +88,6 @@ public class ParticleAnimation extends Application {
 		primaryStage.show();
 	}
 
-	/**
-	 * @param args the command line arguments
-	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

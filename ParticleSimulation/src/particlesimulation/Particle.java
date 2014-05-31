@@ -14,10 +14,9 @@ public class Particle {
 
 	public static Particle[] obj_list;
 
-	public static double[] pos_list;
-	public static double[] v_list;
-	// Repeat x, y and z field
-	// [x-1, y-1, z-1, x-2, y-2, z-2...]
+	public static double[] field_list;
+	// Repeat position and velocity field
+	// [x-1, y-1, z-1, v_x-1, v_y-1, v_z-1, x-2, y-2, z-2...]
 
 	public Particle(double x, double y, double z, double mass, double v_x, double v_y, double v_z){
 		this.position = new Position(x, y, z);
@@ -43,9 +42,9 @@ public class Particle {
 	
 	public static DirectionVector calculate_vector(int own_index, int partner_index){
 		return new DirectionVector(
-			Particle.pos_list[3 * partner_index]     - Particle.pos_list[3 * own_index], 
-			Particle.pos_list[3 * partner_index + 1] - Particle.pos_list[3 * own_index + 1], 
-			Particle.pos_list[3 * partner_index + 2] - Particle.pos_list[3 * own_index + 2]);
+			Particle.field_list[6 * partner_index]     - Particle.field_list[6 * own_index], 
+			Particle.field_list[6 * partner_index + 1] - Particle.field_list[6 * own_index + 1], 
+			Particle.field_list[6 * partner_index + 2] - Particle.field_list[6 * own_index + 2]);
 	}
 
 	private static Power force_function(int own_index, int partner_index){
@@ -121,29 +120,27 @@ public class Particle {
 
 		double limit = ParticleSimulation.WIDTH;
 
-		Particle.pos_list[3 * index] = 
-			fix_position(Particle.pos_list[3 * index] + 
-				move_equation(v_list[3 * index], power.x/mass, t), limit);
-	        Particle.pos_list[3 * index + 1] = 
-			fix_position(Particle.pos_list[3 * index + 1] + 
-				move_equation(v_list[3 * index + 1], power.y/mass, t), limit);
-	        Particle.pos_list[3 * index + 2] = 
-			fix_position(Particle.pos_list[3 * index + 2] + 
-				move_equation(v_list[3 * index + 2], power.z/mass, t), limit);
+		Particle.field_list[6 * index] = 
+			fix_position(Particle.field_list[6 * index] + 
+				move_equation(field_list[6 * index + 3], power.x/mass, t), limit);
+	        Particle.field_list[6 * index + 1] = 
+			fix_position(Particle.field_list[6 * index + 1] + 
+				move_equation(field_list[6 * index + 4], power.y/mass, t), limit);
+	        Particle.field_list[6 * index + 2] = 
+			fix_position(Particle.field_list[6 * index + 2] + 
+				move_equation(field_list[6 * index + 5], power.z/mass, t), limit);
 	}
 
 	public static void create_field_list(){
-		pos_list = new double[obj_list.length * 3];
-		v_list = new double[obj_list.length * 3];
+		field_list = new double[obj_list.length * 6];
 		for(int i = 0; i < obj_list.length; i++){
 			obj_list[i].index   = i;
-			pos_list[3 * i]     = obj_list[i].position.x;
-			pos_list[3 * i + 1] = obj_list[i].position.y;
-			pos_list[3 * i + 2] = obj_list[i].position.z;
-
-			v_list[3 * i]     = obj_list[i].velocity.x;
-			v_list[3 * i + 1] = obj_list[i].velocity.y;
-			v_list[3 * i + 2] = obj_list[i].velocity.z;
+			field_list[6 * i]     = obj_list[i].position.x;
+			field_list[6 * i + 1] = obj_list[i].position.y;
+			field_list[6 * i + 2] = obj_list[i].position.z;
+			field_list[6 * i + 3] = obj_list[i].velocity.x;
+			field_list[6 * i + 4] = obj_list[i].velocity.y;
+			field_list[6 * i + 5] = obj_list[i].velocity.z;
 			
 		}
 	}
