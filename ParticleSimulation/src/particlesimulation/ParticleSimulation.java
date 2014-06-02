@@ -49,11 +49,9 @@ public class ParticleSimulation {
 	}
 
 	public static void update_all_position(double step){
-		Power power;
-
 		for (int i = 0; i < Particle.obj_list.length; i++){
-			power = Particle.calculate_power(i);
-			Particle.update_position(power, MASS, i, step);
+			Particle.calculate_power(i);
+			Particle.update_position(MASS, i, step);
 		}
 	}
 
