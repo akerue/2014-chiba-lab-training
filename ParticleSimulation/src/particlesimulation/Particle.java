@@ -53,13 +53,18 @@ public class Particle {
 	private static void force_function(int own_index, int partner_index){
 		double power_value;
 		calculate_vector(own_index, partner_index);
-		double vector = Math.sqrt(
-				Math.pow(Particle.field_list[CYCLE * own_index + 6], 2.0) +
-				Math.pow(Particle.field_list[CYCLE * own_index + 7], 2.0) + 
-				Math.pow(Particle.field_list[CYCLE * own_index + 8], 2.0)
+
+		double vector = Math.sqrt( 
+			Particle.field_list[CYCLE * own_index + 6] *
+				Particle.field_list[CYCLE * own_index + 6] +
+			Particle.field_list[CYCLE * own_index + 7] * 
+				Particle.field_list[CYCLE * own_index + 7] + 
+			Particle.field_list[CYCLE * own_index + 8] *
+				Particle.field_list[CYCLE * own_index + 8]
 		);
 		if (vector != 0.0) {
-			power_value = Math.pow(ParticleSimulation.MASS, 2.0)/Math.pow(vector, 2.0);
+			power_value = 
+				-(ParticleSimulation.MASS * ParticleSimulation.MASS) / Math.pow(vector, 2.0);
 		} else {
 			power_value = 0.0;
 		}

@@ -3,7 +3,7 @@
 /ParticleGenerator/nbproject/private/
 /ParticleConfigGenerator/nbproject/private/
 /ParticleConfigGenerator/build/
-config/
+conf.txt
 /ParticleSimulation/src/jol/
 .DS_Store
 /ParticleSimulation/src/particlesimulation/*.class
