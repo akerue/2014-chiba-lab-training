@@ -1,0 +1,7 @@
+How to profile
+
+1. If you want to generate config file, exec below
+	ant -f profile.xml config
+
+2. If you want to execute profile, exec below
+	ant -f profile.xml

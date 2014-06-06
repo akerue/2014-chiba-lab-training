@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ParticleSimulation" default="end" basedir=".">
+
+	<target name="compile">
+		<javac srcdir="./src/particlesimulation" >
+			<exclude name="ParticleAnimation.java"/>
+		</javac>
+	</target>
+
+	<target name="start" depends="compile">
+		<exec executable="./profile_start.sh">
+			<arg value="./src" />
+			<arg value="particlesimulation/ParticleSimulation" />
+		</exec>
+	</target>
+
+	<target name="end" depends="start">
+		<exec executable="./profile_end.sh" />
+	</target>
+
+	<target name="config" depends="compile">
+		<exec executable="./config.sh" />
+	</target>
+			
+</project>
+
