@@ -2,8 +2,8 @@
 <project name="ParticleSimulation" default="config" basedir=".">
 
 	<target name="compile">
-		<javac srcdir="./src/particlesimulation" >
-			<exclude name="ParticleAnimation.java"/>
+		<javac srcdir="./src" >
+			<exclude name="particlesimulation/ParticleAnimation.java"/>
 		</javac>
 	</target>
 
