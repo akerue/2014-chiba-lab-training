@@ -3,9 +3,9 @@ import java.io.*;
 import java.util.*;
 
 public class ParticleSimulation {
-	public static final double WIDTH = 99.0;
-	public static final double MASS = 10.0;
-	public static final double STEP = 0.1;
+	public static final float WIDTH = 0.99e2f;
+	public static final float MASS = 0.1e2f;
+	public static final float STEP = 0.1e0f;
 
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		Particle.obj_list = read_config();
@@ -33,20 +33,20 @@ public class ParticleSimulation {
 			}
 			parsed_line = line.replaceAll("¥n", "").split(" ");
 			particles.add(new Particle(
-						Double.valueOf(parsed_line[0]), 
-						Double.valueOf(parsed_line[1]), 
-						Double.valueOf(parsed_line[2]),
+						Float.valueOf(parsed_line[0]), 
+						Float.valueOf(parsed_line[1]), 
+						Float.valueOf(parsed_line[2]),
 						MASS,
-						Double.valueOf(parsed_line[3]), 
-						Double.valueOf(parsed_line[4]), 
-						Double.valueOf(parsed_line[5]))
+						Float.valueOf(parsed_line[3]), 
+						Float.valueOf(parsed_line[4]), 
+						Float.valueOf(parsed_line[5]))
 						);
 		}
 		br.close();
 		return particles.toArray(new Particle[particles.size()]);
 	}
 
-	public static void update_all_position(double step){
+	public static void update_all_position(float step){
 		Power power;
 
 		for (int i = 0; i < Particle.obj_list.length; i++){

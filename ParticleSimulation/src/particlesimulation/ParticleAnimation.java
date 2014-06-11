@@ -43,9 +43,9 @@ public class ParticleAnimation extends Application {
 
 		for (int i = 0; i < Particle.obj_list.length; i++){
 			spheres[i] = new Sphere(radius);
-			spheres[i].setTranslateX(Particle.obj_list[i].position.x);
-			spheres[i].setTranslateY(Particle.obj_list[i].position.y);
-			spheres[i].setTranslateZ(Particle.obj_list[i].position.z);
+			spheres[i].setTranslateX(Particle.obj_list[i].get_x());
+			spheres[i].setTranslateY(Particle.obj_list[i].get_y());
+			spheres[i].setTranslateZ(Particle.obj_list[i].get_z());
 			root.getChildren().add(spheres[i]);	
 		}
 		
@@ -64,12 +64,12 @@ public class ParticleAnimation extends Application {
 						Duration.millis(
 							ParticleSimulation.STEP * 1000),
 						spheres[i]);
-				translateTransitions[i].setFromX(last_particles[i].position.x);
-				translateTransitions[i].setFromY(last_particles[i].position.y);
-				translateTransitions[i].setFromZ(last_particles[i].position.z);
-				translateTransitions[i].setToX(Particle.obj_list[i].position.x);
-				translateTransitions[i].setToY(Particle.obj_list[i].position.y);
-				translateTransitions[i].setToZ(Particle.obj_list[i].position.z);
+				translateTransitions[i].setFromX(last_particles[i].get_x());
+				translateTransitions[i].setFromY(last_particles[i].get_y());
+				translateTransitions[i].setFromZ(last_particles[i].get_z());
+				translateTransitions[i].setToX(Particle.obj_list[i].get_x());
+				translateTransitions[i].setToY(Particle.obj_list[i].get_y());
+				translateTransitions[i].setToZ(Particle.obj_list[i].get_z());
 				parallelTransitions[count].getChildren().add(translateTransitions[i]);
 			}
 		}

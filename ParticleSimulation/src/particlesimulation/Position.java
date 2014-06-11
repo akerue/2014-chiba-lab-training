@@ -11,9 +11,9 @@ package particlesimulation;
  * @author Robbykunsan
  */
 public class Position {
-	public double x, y, z;
+	public float x, y, z;
 
-	public Position(double x, double y, double z){
+	public Position(float x, float y, float z){
 		this.x = x;
 		this.y = y;
 		this.z = z;

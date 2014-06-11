@@ -1,30 +1,32 @@
 package particlesimulation;
 
 public class Particle {
-	public Position position;
-	public Velocity velocity;
-	public double mass;
 
-	// Unused field for extending particle object
-	public double density;
-	public double volume;
-	public double pressure;
-	public double temperature;
+	final public double density = 10.0;
+	private Position position;
+	final public double volume = 10.0;
+	final public Spin spin = new Spin(0.0, 0.0, 0.0);
+	final public double pressure = 10.0;
+	private Velocity velocity;
+	final public double temperature = 10.0;
+	final public Strength strength = new Strength(10.0, 10.0, 10.0);
+
+	private float mass;
 
 	public static Particle[] obj_list;
 
-	public Particle(double x, double y, double z, double mass, double v_x, double v_y, double v_z){
+	public Particle(float x, float y, float z, float mass, float v_x, float v_y, float v_z){
 		this.position = new Position(x, y, z);
 		this.mass = mass;
 		this.velocity = new Velocity(v_x, v_y, v_z);
 	}
-	
-	public double calculate_distance(Particle p){
-		double delta_x = position.x - p.position.x;
-		double delta_y = position.y - p.position.y;
-		double delta_z = position.z - p.position.z;
 
-		return Math.sqrt(Math.pow(delta_x, 2.0) + 
+	public float calculate_distance(Particle p){
+		float delta_x = position.x - p.position.x;
+		float delta_y = position.y - p.position.y;
+		float delta_z = position.z - p.position.z;
+
+		return (float) Math.sqrt(Math.pow(delta_x, 2.0) + 
 				 Math.pow(delta_y, 2.0) + 
 				 Math.pow(delta_z, 2.0));
 	}
@@ -36,23 +38,23 @@ public class Particle {
 	}
 	
 	private Power force_function(Particle p){
-		double power_value;
+		float power_value;
 		DirectionVector v = calculate_vector(p);
 		if (v.get_value() != 0.0) {
-			power_value = - (p.mass * this.mass)/Math.pow(v.get_value(), 2.0);
+			power_value = - (p.mass * this.mass)/(v.get_value() * v.get_value());
+			return new Power(power_value*v.x_vector(), 
+					  power_value*v.y_vector(),
+					  power_value*v.z_vector());
 		} else {
-			power_value = 0.0;
+			return new Power(0, 0, 0);
 		}
-		return new Power(power_value*v.x_vector(), 
-				  power_value*v.y_vector(),
-				  power_value*v.z_vector());
 	}
 
-	private double kinetic_equation(double v, double a, double t) {
+	private float kinetic_equation(float v, float a, float t) {
 		return v + a * t;
 	}
 	
-	public Velocity calculate_velocity(Power power, double t){
+	public Velocity calculate_velocity(Power power, float t){
 		// calculate v after passing t seconds
 		
 		return new Velocity(kinetic_equation(this.velocity.x, power.x/this.mass, t), 
@@ -60,11 +62,11 @@ public class Particle {
 				    kinetic_equation(this.velocity.z, power.z/this.mass, t));
 	}
 
-	private double move_equation(double v, double a, double t){
+	private float move_equation(float v, float a, float t){
 		return (v * t + a * t * t / 2);
 	}
 
-	private double fix_position(double pos, double limit){
+	private float fix_position(float pos, float limit){
 		if (pos > limit){
 			return fix_position(pos % limit, limit);
 		} else if (pos < 0.0) {
@@ -75,7 +77,7 @@ public class Particle {
 	}
 
 	public Power calculate_power(){
-		Power total_power = new Power(0.0, 0.0, 0.0);
+		Power total_power = new Power(0, 0, 0);
 		for (int i = 0; i < Particle.obj_list.length; i++) {
 			if (Particle.obj_list[i] == this){
 				continue;
@@ -85,11 +87,11 @@ public class Particle {
 		return total_power;
 	}
 
-	public Position calculate_position(Power power, double t){
+	public Position calculate_position(Power power, float t){
 		// calculate position after passing t seconds
 
-		double next_x, next_y, next_z;
-		double limit = ParticleSimulation.WIDTH;
+		float next_x, next_y, next_z;
+		float limit = ParticleSimulation.WIDTH;
 
 		next_x = fix_position(
 			this.position.x + move_equation(this.velocity.x, power.x/this.mass, t), 
@@ -103,10 +105,10 @@ public class Particle {
 		return new Position(next_x, next_y, next_z);
 	}
 
-	public void update_position(Power power, double t){
+	public void update_position(Power power, float t){
 		// calculate position after passing t seconds
 
-		double limit = ParticleSimulation.WIDTH;
+		float limit = ParticleSimulation.WIDTH;
 		this.position.x = 
 			fix_position(this.position.x + 
 				move_equation(this.velocity.x, power.x/this.mass, t), limit);
@@ -116,6 +118,18 @@ public class Particle {
 		this.position.z = 
 			fix_position(this.position.z + 
 				move_equation(this.velocity.z, power.z/this.mass, t), limit);
+	}
+
+	public float get_x() {
+		return this.position.x;
+	}
+
+	public float get_y() {
+		return this.position.y;
+	}
+
+	public float get_z() {
+		return this.position.z;
 	}
 
 }

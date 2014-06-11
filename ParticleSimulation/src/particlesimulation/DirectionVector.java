@@ -11,29 +11,29 @@ package particlesimulation;
  * @author Robbykunsan
  */
 public class DirectionVector {
-	double x, y, z;
-	private double value;
+	float x, y, z;
+	private float value;
 
-	public DirectionVector(double x, double y, double z){
+	public DirectionVector(float x, float y, float z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.value = Math.sqrt(x * x + y * y + z * z);
+		this.value = (float) Math.sqrt(x * x + y * y + z * z);
 	}
 
-	public double x_vector(){
+	public float x_vector(){
 		return this.x/this.value;
 	}
 
-	public double y_vector(){
+	public float y_vector(){
 		return this.y/this.value;
 	}
 	
-	public double z_vector(){
+	public float z_vector(){
 		return this.z/this.value;
 	}
 
-	public double get_value(){
+	public float get_value(){
 		return this.value;
 	}
 }

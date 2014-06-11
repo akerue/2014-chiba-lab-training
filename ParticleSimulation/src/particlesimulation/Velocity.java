@@ -9,7 +9,7 @@ package particlesimulation;
  * @author Robbykunsan
  */
 public class Velocity extends DirectionVector {
-	public Velocity(double x, double y, double z){
+	public Velocity(float x, float y, float z){
 		super(x, y, z);
 	}
 }
