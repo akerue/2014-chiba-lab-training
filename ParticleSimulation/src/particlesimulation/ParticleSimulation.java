@@ -11,12 +11,12 @@ public class ParticleSimulation {
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		read_config();
 		// for JIT optimization
-		for (int count = 0; count < 50; count++){
+		for (int count = 0; count < 10; count++){
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
 		TimeProfile tp = new TimeProfile();
 		tp.start();
-		for (int count = 0; count < 500; count++){
+		for (int count = 0; count < 100; count++){
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
 		tp.print_micro_time();
