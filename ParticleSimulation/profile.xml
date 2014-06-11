@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ParticleSimulation" default="end" basedir=".">
+<project name="ParticleSimulation" default="config" basedir=".">
 
 	<target name="compile">
-		<javac srcdir="./src/particlesimulation" >
-			<exclude name="ParticleAnimation.java"/>
+		<javac srcdir="./src" >
+			<exclude name="particlesimulation/ParticleAnimation.java"/>
 		</javac>
 	</target>
 
-	<target name="start" depends="compile">
+	<target name="start-d" depends="compile">
+		<exec executable="./profile_start_for_desktop.sh">
+			<arg value="./src" />
+			<arg value="particlesimulation/ParticleSimulation" />
+		</exec>
+	</target>
+
+	<target name="start-x" depends="compile">
 		<exec executable="./profile_start.sh">
 			<arg value="./src" />
 			<arg value="particlesimulation/ParticleSimulation" />
 		</exec>
 	</target>
 
-	<target name="end" depends="start">
+	<target name="prof-d" depends="start-d">
+		<exec executable="./profile_end.sh" />
+	</target>
+
+	<target name="prof-x" depends="start-x">
 		<exec executable="./profile_end.sh" />
 	</target>
 
