@@ -21,8 +21,9 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 
 public class ParticleAnimation extends Application {
-	double radius = 1.0;
-	int TIMES = 500;
+	final double radius = 1.0;
+	final int TIMES = 500;
+	final int NUM = ParticleConfigGenerator.NUM;
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException{
@@ -38,16 +39,15 @@ public class ParticleAnimation extends Application {
 		scene.setCamera(camera);
 
 		// generate particles
-		Particle.obj_list = ParticleSimulation.read_config();
-		Particle.create_field_list();
-		Sphere[] spheres = new Sphere[Particle.obj_list.length];
+		ParticleSimulation.read_config();
+		Sphere[] spheres = new Sphere[NUM];
 		ParallelTransition[] parallelTransitions = new ParallelTransition[TIMES];
 
 		for (int i = 0; i < TIMES; i++){
 			parallelTransitions[i] = new ParallelTransition();
 		}
 
-		for (int i = 0; i < Particle.obj_list.length; i++){
+		for (int i = 0; i < NUM; i++){
 			spheres[i] = new Sphere(radius);
 			spheres[i].setTranslateX(Particle.field_list[3 * i]);
 			spheres[i].setTranslateY(Particle.field_list[3 * i + 1]);
@@ -55,17 +55,17 @@ public class ParticleAnimation extends Application {
 			root.getChildren().add(spheres[i]);	
 		}
 		
-		double[] last_particles;
+		float[] last_particles;
 		TranslateTransition[] translateTransitions = 
-			new TranslateTransition[Particle.obj_list.length];
-		for (int i = 0; i < Particle.obj_list.length; i++){
+			new TranslateTransition[NUM];
+		for (int i = 0; i < NUM; i++){
 			translateTransitions[i] = new TranslateTransition();
 		}
 		
 		for (int count = 0; count < TIMES; count++){
 			last_particles = Particle.field_list;
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
-			for (int i = 0; i < Particle.obj_list.length; i++){
+			for (int i = 0; i < NUM; i++){
 				translateTransitions[i] = new TranslateTransition(
 						Duration.millis(
 							ParticleSimulation.STEP * 1000),

@@ -10,10 +10,9 @@ package particlesimulation;
  *
  * @author Robbykunsan
  */
-public class Position {
-	public float x, y, z;
-
-	public Position(float x, float y, float z){
+public class Spin{
+	double x, y, z;
+	public Spin(double x, double y, double z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
