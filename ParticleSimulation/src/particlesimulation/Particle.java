@@ -42,38 +42,43 @@ public class Particle {
 	}
 	
 	public static void calculate_vector(int own_index, int partner_index){
-		Particle.field_list[CYCLE * own_index + 6] = 
-			Particle.field_list[CYCLE * partner_index]     - Particle.field_list[CYCLE * own_index];
-		Particle.field_list[CYCLE * own_index + 7] = 
-			Particle.field_list[CYCLE * partner_index + 1] - Particle.field_list[CYCLE * own_index + 1];
-		Particle.field_list[CYCLE * own_index + 8] = 
-			Particle.field_list[CYCLE * partner_index + 2] - Particle.field_list[CYCLE * own_index + 2];
+		int own_offset = CYCLE * own_index;
+		int partner_offset = CYCLE * partner_index;
+
+		Particle.field_list[own_offset + 6] = 
+			Particle.field_list[partner_offset]     - Particle.field_list[own_offset];
+		Particle.field_list[own_offset + 7] = 
+			Particle.field_list[partner_offset + 1] - Particle.field_list[own_offset + 1];
+		Particle.field_list[own_offset + 8] = 
+			Particle.field_list[partner_offset + 2] - Particle.field_list[own_offset + 2];
 	}
 
 	private static void force_function(int own_index, int partner_index){
 		double power_value;
 		calculate_vector(own_index, partner_index);
+		int own_offset = CYCLE * own_index;
+		int partner_offset = CYCLE * partner_index;
 
 		double vector = Math.sqrt( 
-			Particle.field_list[CYCLE * own_index + 6] *
-				Particle.field_list[CYCLE * own_index + 6] +
-			Particle.field_list[CYCLE * own_index + 7] * 
-				Particle.field_list[CYCLE * own_index + 7] + 
-			Particle.field_list[CYCLE * own_index + 8] *
-				Particle.field_list[CYCLE * own_index + 8]
+			Particle.field_list[own_offset + 6] *
+				Particle.field_list[own_offset + 6] +
+			Particle.field_list[own_offset + 7] * 
+				Particle.field_list[own_offset + 7] + 
+			Particle.field_list[own_offset + 8] *
+				Particle.field_list[own_offset + 8]
 		);
 		if (vector != 0.0) {
 			power_value = 
-				-(ParticleSimulation.MASS * ParticleSimulation.MASS) / Math.pow(vector, 2.0);
+				-(ParticleSimulation.MASS * ParticleSimulation.MASS) / vector * vector;
+			Particle.field_list[own_offset + 9]  +=
+				power_value * Particle.field_list[own_offset + 6] / vector;
+			Particle.field_list[own_offset + 10] +=
+				power_value * Particle.field_list[own_offset + 7] / vector;
+			Particle.field_list[own_offset + 11] +=
+				power_value * Particle.field_list[own_offset + 8] / vector;
 		} else {
 			power_value = 0.0;
 		}
-		Particle.field_list[CYCLE * own_index + 9]  +=
-			power_value * Particle.field_list[CYCLE * own_index + 6] / vector;
-		Particle.field_list[CYCLE * own_index + 10] +=
-			power_value * Particle.field_list[CYCLE * own_index + 7] / vector;
-		Particle.field_list[CYCLE * own_index + 11] +=
-			power_value * Particle.field_list[CYCLE * own_index + 8] / vector;
 	}
 
 	private double kinetic_equation(double v, double a, double t) {
@@ -133,37 +138,39 @@ public class Particle {
 		// calculate position after passing t seconds
 
 		double limit = ParticleSimulation.WIDTH;
+		int offset = CYCLE * index;
 
-		Particle.field_list[CYCLE * index] = 
-			fix_position(Particle.field_list[CYCLE * index] + 
-				move_equation(field_list[CYCLE * index + 3], 
-					Particle.field_list[CYCLE * index + 9]/mass, t), limit);
-	        Particle.field_list[CYCLE * index + 1] = 
-			fix_position(Particle.field_list[CYCLE * index + 1] + 
-				move_equation(field_list[CYCLE * index + 4], 
-					Particle.field_list[CYCLE * index + 10]/mass, t), limit);
-	        Particle.field_list[CYCLE * index + 2] = 
-			fix_position(Particle.field_list[CYCLE * index + 2] + 
-				move_equation(field_list[CYCLE * index + 5], 
-					Particle.field_list[CYCLE * index + 11]/mass, t), limit);
+		Particle.field_list[offset] = 
+			fix_position(Particle.field_list[offset] + 
+				move_equation(field_list[offset + 3], 
+					Particle.field_list[offset + 9]/mass, t), limit);
+	        Particle.field_list[offset + 1] = 
+			fix_position(Particle.field_list[offset + 1] + 
+				move_equation(field_list[offset + 4], 
+					Particle.field_list[offset + 10]/mass, t), limit);
+	        Particle.field_list[offset + 2] = 
+			fix_position(Particle.field_list[offset + 2] + 
+				move_equation(field_list[offset + 5], 
+					Particle.field_list[offset + 11]/mass, t), limit);
 	}
 
 	public static void create_field_list(){
 		field_list = new double[obj_list.length * CYCLE];
 		for(int i = 0; i < obj_list.length; i++){
+			int offset = CYCLE * i;
 			obj_list[i].index   = i;
-			field_list[CYCLE * i]     = obj_list[i].position.x;
-			field_list[CYCLE * i + 1] = obj_list[i].position.y;
-			field_list[CYCLE * i + 2] = obj_list[i].position.z;
-			field_list[CYCLE * i + 3] = obj_list[i].velocity.x;
-			field_list[CYCLE * i + 4] = obj_list[i].velocity.y;
-			field_list[CYCLE * i + 5] = obj_list[i].velocity.z;
-			field_list[CYCLE * i + 6] = 0.0;
-			field_list[CYCLE * i + 7] = 0.0;
-			field_list[CYCLE * i + 8] = 0.0;
-			field_list[CYCLE * i + 9] = 0.0;
-			field_list[CYCLE * i + 10] = 0.0;
-			field_list[CYCLE * i + 11] = 0.0;
+			field_list[offset]     = obj_list[i].position.x;
+			field_list[offset + 1] = obj_list[i].position.y;
+			field_list[offset + 2] = obj_list[i].position.z;
+			field_list[offset + 3] = obj_list[i].velocity.x;
+			field_list[offset + 4] = obj_list[i].velocity.y;
+			field_list[offset + 5] = obj_list[i].velocity.z;
+			field_list[offset + 6] = 0.0;
+			field_list[offset + 7] = 0.0;
+			field_list[offset + 8] = 0.0;
+			field_list[offset + 9] = 0.0;
+			field_list[offset + 10] = 0.0;
+			field_list[offset + 11] = 0.0;
 			
 		}
 	}
