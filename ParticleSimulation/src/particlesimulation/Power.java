@@ -11,7 +11,7 @@ package particlesimulation;
  * @author Robbykunsan
  */
 public class Power extends DirectionVector{
-	public Power(float x, float y, float z){
+	public Power(double x, double y, double z){
 		super(x, y, z);
 	}
 

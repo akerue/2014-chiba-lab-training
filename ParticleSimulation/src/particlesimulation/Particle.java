@@ -4,7 +4,7 @@ public class Particle {
 	private int index;
 	private Position position;
 	private Velocity velocity;
-	private float mass;
+	private double mass;
 
 	// Unused field for extending particle object
 	final public double density = 10.0;
@@ -23,11 +23,11 @@ public class Particle {
 	final public static int V_X_INDEX = 3;
 	final public static int V_Y_INDEX = 4;
 	final public static int V_Z_INDEX = 5;
-	public static float[] field_list = new float[NUM * CYCLE];
+	public static double[] field_list = new double[NUM * CYCLE];
 	// Repeat position and velocity field
 	// [x-1, y-1, z-1, v_x-1, v_y-1, v_z-1...]
 
-	private static float[] temp_list = new float[6];
+	private static double[] temp_list = new double[6];
 	// Save temp data
 	// [vec_x, vec_y, vec_z, pow_x, pow_y, pow_z]
 	final public static int VEC_X_INDEX = 0;
@@ -37,7 +37,7 @@ public class Particle {
 	final public static int POW_Y_INDEX = 4;
 	final public static int POW_Z_INDEX = 5;
 
-	public Particle(float x, float y, float z, float mass, float v_x, float v_y, float v_z){
+	public Particle(double x, double y, double z, double mass, double v_x, double v_y, double v_z){
 		this.position = new Position(x, y, z);
 		this.mass = mass;
 		this.velocity = new Velocity(v_x, v_y, v_z);
@@ -55,13 +55,13 @@ public class Particle {
 	}
 
 	private static void force_function(int own_index, int partner_index){
-		float power_value;
+		double power_value;
 		calculate_vector(own_index, partner_index);
-		float vec_x = Particle.temp_list[VEC_X_INDEX];
-		float vec_y = Particle.temp_list[VEC_Y_INDEX];
-		float vec_z = Particle.temp_list[VEC_Z_INDEX];
+		double vec_x = Particle.temp_list[VEC_X_INDEX];
+		double vec_y = Particle.temp_list[VEC_Y_INDEX];
+		double vec_z = Particle.temp_list[VEC_Z_INDEX];
 
-		float vector = (float) Math.sqrt(vec_x * vec_x + vec_y * vec_y + vec_z * vec_z);
+		double vector = (double) Math.sqrt(vec_x * vec_x + vec_y * vec_y + vec_z * vec_z);
 		if (vector != 0.0) {
 			power_value = 
 				-(ParticleSimulation.MASS * ParticleSimulation.MASS) / (vector * vector);
@@ -77,11 +77,11 @@ public class Particle {
 		}
 	}
 
-	private float kinetic_equation(float v, float a, float t) {
+	private double kinetic_equation(double v, double a, double t) {
 		return v + a * t;
 	}
 	
-	public Velocity calculate_velocity(Power power, float t){
+	public Velocity calculate_velocity(Power power, double t){
 		// calculate v after passing t seconds
 		
 		return new Velocity(kinetic_equation(this.velocity.x, power.x/this.mass, t), 
@@ -89,11 +89,11 @@ public class Particle {
 				    kinetic_equation(this.velocity.z, power.z/this.mass, t));
 	}
 
-	private static float move_equation(float v, float a, float t){
+	private static double move_equation(double v, double a, double t){
 		return (v * t + a * t * t / 2);
 	}
 
-	private static float fix_position(float pos, float limit){
+	private static double fix_position(double pos, double limit){
 		if (pos > limit){
 			return fix_position(pos % limit, limit);
 		} else if (pos < 0.0) {
@@ -112,10 +112,10 @@ public class Particle {
 		}
 	}
 
-	public static void update_position(float mass, int index, float t){
+	public static void update_position(double mass, int index, double t){
 		// calculate position after passing t seconds
 
-		float limit = ParticleSimulation.WIDTH;
+		double limit = ParticleSimulation.WIDTH;
 		int offset = CYCLE * index;
 
 		Particle.field_list[offset + X_INDEX] = 

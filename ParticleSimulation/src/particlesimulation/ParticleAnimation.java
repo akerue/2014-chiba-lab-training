@@ -55,7 +55,7 @@ public class ParticleAnimation extends Application {
 			root.getChildren().add(spheres[i]);	
 		}
 		
-		float[] last_particles;
+		double[] last_particles;
 		TranslateTransition[] translateTransitions = 
 			new TranslateTransition[NUM];
 		for (int i = 0; i < NUM; i++){
