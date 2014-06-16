@@ -32,6 +32,10 @@
 	<target name="config" depends="compile">
 		<exec executable="./config.sh" />
 	</target>
+
+	<target name="benchmark" depends="compile">
+		<exec executable="./benchmark.sh" />
+	</target>
 			
 </project>
 
