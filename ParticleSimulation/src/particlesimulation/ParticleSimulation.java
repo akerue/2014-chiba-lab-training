@@ -11,12 +11,12 @@ public class ParticleSimulation {
 		Particle.obj_list = read_config();
 		Particle.create_field_list();
 		// for JIT optimization
-		for (int count = 0; count < 50; count++){
+		for (int count = 0; count < 5; count++){
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
 		TimeProfile tp = new TimeProfile();
 		tp.start();
-		for (int count = 0; count < 500; count++){
+		for (int count = 0; count < 10; count++){
 			ParticleSimulation.update_all_position(ParticleSimulation.STEP);
 		}
 		tp.print_micro_time();

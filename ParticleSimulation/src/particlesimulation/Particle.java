@@ -64,7 +64,7 @@ public class Particle {
 		);
 		if (vector != 0.0) {
 			power_value = 
-				-(ParticleSimulation.MASS * ParticleSimulation.MASS) / Math.pow(vector, 2.0);
+				-(ParticleSimulation.MASS * ParticleSimulation.MASS) / (vector * vector);
 		} else {
 			power_value = 0.0;
 		}
